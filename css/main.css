@@ -1,0 +1,289 @@
+html {
+	background: #eee;
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+/* poor mans css reset */
+* {
+	box-sizing: border-box;
+}
+
+.weather {
+	max-width: 600px;
+	background: #FFF;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),
+				0 3px 1px -2px rgba(0,0,0,.2),
+				0 1px 5px 0 rgba(0,0,0,.12);
+
+	/* IE 10 flexbox support */
+	display: -ms-flexbox;
+	-ms-flex-direction: column;
+	-ms-flex-pack: center; /* same as justify-content: center */
+
+	/* Regular flexbox support */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.weather-latest {
+	min-width: 250px;
+	text-align: center;
+	background: #3F51B5;
+	color: #FFF;
+	padding: 20px;
+
+	/* IE 10 flexbox support */
+	display: -ms-flexbox;
+	-ms-flex: 1; /* IE 10 support */
+	-ms-flex-direction: column;
+	-ms-flex-pack: center; /* same as justify-content: center */
+
+	/* all other browser flexbox support */
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.weather-recent {
+	text-align: center;
+
+	/* IE 10 flexbox */
+	display: -ms-flexbox;
+	-ms-flex: 1; /* IE 10 support */
+	-ms-flex-direction: column;
+	-ms-flex-align: center;
+
+	/* Modern flexbox */
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+}
+
+.weather-latest-time {
+	display: block;
+}
+
+.weather-latest-value {
+	display: block;
+	font-size: 100px;
+	line-height: 80px;
+	position: relative;
+}
+/* add a degree symbol this way so the temperature value is still centered */
+.weather-latest-value:after {
+	content: '\00B0';
+	position: absolute;
+	top: 0;
+	font-size: 50px;
+	line-height: 50px;
+}
+
+.weather-recent-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	width: 100%;
+	max-height: 200px;
+	overflow-y: auto;
+	text-align: left;
+}
+.weather-recent-list-item {
+	padding: 16px 24px;
+	background: white;
+	color: #777;
+	border-bottom: 1px solid #e5e5e5;
+	width: 100%;
+	font-size: 14px;
+}
+.weather-recent-list-item span:last-child {
+	float: right;
+}
+
+#weather-chart {
+	width: 100%;
+	height: 100px;
+}
+
+.fab {
+	display: block;
+	position: absolute;
+	width: 52px;
+	height: 52px;
+	border: none;
+	border-radius: 50%;
+	z-index: 1;
+	right: 16px;
+	top: 110px;
+
+	/* IE 10 transform */
+	-ms-transform: translateX(-50%);
+	-ms-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) .2s;
+	/* modern transform */
+	transform: translateX(-50%);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) .2s;
+}
+
+.fab:before {
+	content: "";
+	display: block;
+	height: 52px;
+	width: 52px;
+	border-radius: 50%;
+	background-color: #F50057;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
+				0 6px 10px 0 rgba(0, 0, 0, 0.3);
+	-ms-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) .2s;
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) .2s;
+}
+
+.fab.expanded:before {
+	-ms-transform: scale(30);
+	transform: scale(30);
+}
+
+.fab .fab-icon-btn {
+	cursor: pointer;
+	border: 0;
+	height: 52px;
+	width: 52px;
+	border-radius: 50%;
+	background-color: #F50057;
+	outline: 0;
+
+	-ms-transform: translateY(-52px);
+	-ms-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 200ms;
+	transform: translateY(-52px);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) 200ms;
+}
+
+.fab.expanded .fab-icon-btn {
+	-ms-transform: rotate(45deg) translate(-85px, -140px);
+	transform: rotate(45deg) translate(-85px, -140px);
+}
+
+.fab .fab-icon-btn:before {
+	content: "";
+	height: 24px;
+	width: 3px;
+	display: block;
+	background: #FFF;
+	position: absolute;
+	top: 15px;
+	left: 24px;
+}
+
+.fab .fab-icon-btn:after {
+	content: "";
+	height: 3px;
+	width: 24px;
+	display: block;
+	background: #FFF;
+	position: absolute;
+	top: 25px;
+	left: 14px;
+}
+
+.add-temperature-container {
+	opacity: 0;
+	-ms-transition: opacity .5s ease;
+	transition: opacity .5s ease;
+	position: absolute;
+	z-index: -1;
+	top: 52px;
+	left: 0;
+	width: 100%;
+	padding: 0 24px;
+	text-align: center;
+}
+.fab.expanded + .add-temperature-container {
+	opacity: 1;
+	-ms-transition: opacity 1s ease .5s;
+	transition: opacity 1s ease .5s;
+	z-index: 2;
+}
+
+.add-temperature-container .temperature-input {
+	border: 1px solid rgba(0,0,0,0.2);
+	background: rgba(0,0,0,0.2);
+	font-size: 32px;
+	text-align: center;
+	color: #FFF;
+	border-radius: 4px;
+	outline: 0;
+	display: block;
+	margin: 16px auto;
+}
+
+.add-temperature-container .temperature-input-button {
+	border: 1px solid rgba(0,0,0,0.1);
+	border-radius: 4px;
+	font-size: 20px;
+	padding: 12px 32px;
+	background: #FFF;
+	cursor: pointer;
+	-ms-transition: box-shadow .3s ease;
+	transition: box-shadow .3s ease;
+}
+
+.add-temperature-container .temperature-input-button[disabled]  {
+	cursor: default;
+	background: rgba(0,0,0,0.1);
+	color: #DDD;
+}
+
+.add-temperature-container .temperature-input-button:hover {
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
+				0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.add-temperature-container .temperature-input-button[disabled]:hover {
+	box-shadow: none;
+}
+
+/* Breakpoint for when the weather area reflows into landscape mode */
+@media (min-width: 600px) {
+	body {
+		/* IE 10 flexbox */
+		display: -ms-flexbox;
+		-ms-flex-align: center;
+		-ms-flex-pack: center; /* same as justify-content: center */
+
+		/* More modern flexbox */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.weather {
+		-mx-flex: 1;
+		-ms-flex-direction: row-reverse;
+		flex: 1;
+		flex-direction: row-reverse;
+	}
+	.weather-latest {
+		max-width: 250px;
+	}
+	.fab {
+		-ms-transform: translateX(-50%);
+		transform: translateX(-50%);
+		top: 52px;
+		right: initial;
+	}
+	.fab .fab-icon-btn {
+		-ms-transform: translateY(-52px);
+		transform: translateY(-52px);
+	}
+	.fab.expanded .fab-icon-btn {
+		-ms-transform: rotate(45deg) translate(85px, -225px);
+		transform: rotate(45deg) translate(85px, -225px);
+	}
+}

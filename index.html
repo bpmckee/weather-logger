@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Billy's Weather Logger</title>
+
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<div class="weather">
+		<div class="weather-latest" id="weather-latest">
+			<span class="weather-latest-time">--/--/-- --:--:--</span>
+			<span class="weather-latest-value">--</span>
+		</div>
+		<div class="fab" id="fab">
+			<button type="button" class="fab-icon-btn" id="fabToggle"></button>
+		</div>
+		<div class="add-temperature-container">
+			<label for="temperatureInput" class="temperature-input-label">Add Temperature</label>
+			<input type="number" class="temperature-input" id="temperatureInput" />
+			<button type="submit" class="temperature-input-button" id="temperatureInputButton">Add</button>
+		</div>
+		<div class="weather-recent">
+			<ul class="weather-recent-list" id="weather-recent-list">
+				<li class="weather-recent-list-item">
+					<span>--/--/-- --:--:--</span>
+					<span>--&deg;</span>
+				</li>
+				<li class="weather-recent-list-item">
+					<span>--/--/-- --:--:--</span>
+					<span>--&deg;</span>
+				</li>
+				<li class="weather-recent-list-item">
+					<span>--/--/-- --:--:--</span>
+					<span>--&deg;</span>
+				</li>
+				<li class="weather-recent-list-item">
+					<span>--/--/-- --:--:--</span>
+					<span>--&deg;</span>
+				</li>
+			</ul>
+			<div id="weather-chart"></div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
